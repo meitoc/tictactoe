@@ -7,18 +7,18 @@ function Game() {
   const [squares, setSquares] = useState(Array(9).fill(null));
   const [xIsNext, setXIsNext] = useState(true);
   const [winner, setWinner] = useState(null);
-  const [point, setPoint] =useState([0,0])
+  const [point, setPoint] = useState([0,0]);
+  const [showPoint, setShowPoint] = useState(false);
 
   //Declaring a Winner
   useEffect(() => {
     //"Your code here";
-    console.log(winner);
-    if(winner!==null){
-      if(winner==="X") point[0]++;
-      else if(winner==="0") point[1]++;
-      setPoint(point);
+    if(winner!==null && showPoint){
+      if(winner==="X") setPoint([point[0]+1,point[1]]);
+      else if(winner==="O") setPoint([point[0],point[1]+1]);
+      setShowPoint(false);
     }
-  }, [point,winner,squares]);
+  }, [point,winner,showPoint]);
 
   //function to check if a player has won.
   //If a player has won, we can display text such as “Winner: X” or “Winner: O”.
@@ -50,11 +50,13 @@ function Game() {
   //Handle player
   const handleClick = (i) => {
     // "Your code here";
-    if(squares[i]===null){
+    if(squares[i]===null && winner===null){
       squares[i]=xIsNext;
       let result=calculateWinner(squares);
+      console.log(result);
       if(result!==null) {
         setWinner(result?  "X" : "O");
+        setShowPoint(true);
       } else{
         if(checkFull(squares)) setWinner(0);
         setXIsNext(!xIsNext);
@@ -67,6 +69,7 @@ function Game() {
     // "Your code here";
     setWinner(null);
     setSquares(Array(9).fill(null));
+    setShowPoint(false);
   };
   // console.log(point);//test
   return (
