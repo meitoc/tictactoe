@@ -27,13 +27,13 @@ function Game() {
   const calculateWinner = (squares) => {
     const lines = [
       [0, 1, 2],
-      [3, 4, 5],
-      [6, 7, 8],
       [0, 3, 6],
-      [1, 4, 7],
-      [2, 5, 8],
       [0, 4, 8],
+      [1, 4, 7],
       [2, 4, 6],
+      [2, 5, 8],
+      [3, 4, 5],
+      [6, 7, 8]
     ];
     for (let i = 0; i < lines.length; i++) {
       const [a, b, c] = lines[i];
@@ -41,7 +41,8 @@ function Game() {
         squares[a] === squares[b] &&
         squares[a] === squares[c]
       ) {
-        return squares[a];
+        // console.log(squares);
+        if(squares[a]===true || squares[a]===false) return squares[a];
       }
     }
     return null;
@@ -52,8 +53,9 @@ function Game() {
     // "Your code here";
     if(squares[i]===null && winner===null){
       squares[i]=xIsNext;
+      // setSquares(squares);
       let result=calculateWinner(squares);
-      console.log(result);
+      // console.log(result);
       if(result!==null) {
         setWinner(result?  "X" : "O");
         setShowPoint(true);
